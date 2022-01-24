@@ -9,7 +9,10 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "react": "^16.13.0",
+    "react-bootstrap": "^2.1.1",
     "react-dom": "^16.13.0",
+    "react-native": "^0.67.0",
+    "react-native-web": "^0.17.5",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-validation": "^3.0.7",
@@ -35,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-static-block": "^7.16.7"
   }
 }
