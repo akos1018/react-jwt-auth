@@ -1,23 +1,47 @@
 import React from 'react';
-import {StyleSheet, FlatList, ActivityIndicator, Text, View, Image , TouchableOpacity } from 'react-native';
+import {StyleSheet, FlatList, ActivityIndicator, Text, View, Image , TouchableOpacity } from 'react-native-web';
+
+
+const ipcim="localhost:8080";
 
 export default class FetchExample extends React.Component {
 
   constructor(props){
     super(props);
-    this.state ={ 
-      isLoading: true,
-      dataSource:[]
-    }
+    this.state ={ isLoading: true}
   }
 
-  szavazat=(szam)=>{
+ 
+
+
+
+  componentDidMount(){
+    document.body.style.backgroundColor = "#262626"
+
+    return fetch('http://'+ipcim+'/sorozat')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+  }
+
+  torles=(szam)=>{
     //alert(szam)
     var bemenet={
       bevitel1:szam
     }
 
-  fetch("http://localhost:8080/torles", {
+  fetch('http://'+ipcim+'/sorozattorles', {
       method: "POST",
       body: JSON.stringify(bemenet),
       headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -25,29 +49,9 @@ export default class FetchExample extends React.Component {
   
   )
   .then(x => x.text())
-  .then(y => console.log(y));
+  .then(y => alert(y));
 
-  fetch('http://localhost:8080/sorozat')
-      .then((response) => response.json())
-      .then((responseJson) => {
-
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson,
-        }, function(){
-
-        });
-
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
-
-  }
-
-
-  componentDidMount(){
-     fetch('http://localhost:8080/sorozat')
+  fetch('http://'+ipcim+'/sorozat')
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -63,8 +67,6 @@ export default class FetchExample extends React.Component {
         console.error(error);
       });
   }
-
-
 
   render(){
 
@@ -83,14 +85,16 @@ export default class FetchExample extends React.Component {
           renderItem={({item}) => 
 
           <View >
-          <Text style={{color:"brown",fontSize:20,textAlign:"center",marginTop:15,marginBottom:5}}   >{item.sorozat_cim} </Text>
-          <Image  source={{uri: 'http://localhost:8080/kepek/'+item.sorozat_kep}} style={{width:300,height:300,marginLeft:"auto",marginRight:"auto"}} />  
-
+              <Text style={{color:"brown",fontSize:20,textAlign:"center",marginTop:15,marginBottom:5}}   >{item.sorozat_cim} </Text>
+            <Image 
+            source={{uri:'http://'+ipcim+'/kepek/'+item.sorozat_kep}}
+            style={{width:200,height:280,marginRight:10,marginTop:10,marginLeft:"auto", marginRight:"auto",borderRadius:15,}}
+            />
           <TouchableOpacity
         style={styles.kekgomb}
-        onPress={async ()=>this.szavazat(item.sorozat_id)}
+        onPress={async ()=>this.torles(item.sorozat_id)}
       >
-        <Text style={{color:"white",fontWeight:"bold",fontSize:15}}  >Törlés</Text>
+        <Text style={{color:"white",fontWeight:"bold",fontSize:15}}  >Torles</Text>
       </TouchableOpacity>
           </View>
         
