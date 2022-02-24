@@ -31,7 +31,8 @@ function FileUpload(props) {
                 bevitel5:fileName,
                 bevitel6:props.sorozatleiras,
                 bevitel7:props.sorozatevadszam,
-                bevitel8:props.sorozatepizodszam
+                bevitel8:props.sorozatepizodszam,
+                bevitel15:props.sorozatlink
                 
               }
               fetch('http://localhost:8080/sorozatfelvitel', {

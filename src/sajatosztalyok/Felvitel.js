@@ -20,6 +20,7 @@ export default class Kezdooldal extends React.Component {
       sorozatleiras:'',
       sorozatevadszam:'',
       sorozatepizodszam:'',
+      sorozatlink:'',
       filmcim:'',
       filmev:'',
       filmhossz:'',
@@ -42,7 +43,7 @@ export default class Kezdooldal extends React.Component {
 
     return(
         <View style={{flexDirection:"row"}}>
-          <View style={{alignItems:"left", marginTop:30}}>
+          <View style={{flex:3, marginTop:30,alignItems:"center"}}>
           <TextInput
           style={{borderRadius:15, borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderColor:"transparent",color:"black",width:200,height:35,marginLeft:30,}}
           onChangeText={(sorozatcim) => this.setState({sorozatcim})}
@@ -98,6 +99,13 @@ export default class Kezdooldal extends React.Component {
           multiline={true}
           placeholder='Sorozat epizódszám'
         />
+         <TextInput
+          style={{borderRadius:15, borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderColor:"transparent",color:"black",width:200,height:35,marginLeft:30}}
+          onChangeText={(sorozatlink) => this.setState({sorozatlink})}
+          value={this.state.sorozatlink}
+          multiline={true}
+          placeholder='Sorozat linkje'
+        />
           <FileUpload 
           sorozatcim={this.state.sorozatcim} 
           sorozatev={this.state.sorozatev} 
@@ -105,7 +113,9 @@ export default class Kezdooldal extends React.Component {
           sorozatmufaj={this.state.sorozatmufaj}
           sorozatleiras={this.state.sorozatleiras}
           sorozatevadszam={this.state.sorozatevadszam}
-          sorozatepizodszam={this.state.sorozatepizodszam}>
+          sorozatepizodszam={this.state.sorozatepizodszam}
+          sorozatlink={this.state.sorozatlink}>
+            
           </FileUpload>
 
     </View>
@@ -114,7 +124,7 @@ export default class Kezdooldal extends React.Component {
 
 
 
-    <View style={{alignItems:"center", marginTop:30}}>
+    <View style={{flex:3,alignItems:"center", marginTop:30}}>
           <TextInput
           style={{borderRadius:15, borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderColor:"transparent",color:"black",width:200,height:35,marginLeft:30,}}
           onChangeText={(filmcim) => this.setState({filmcim})}
