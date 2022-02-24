@@ -90,7 +90,7 @@ export default class FetchExample extends React.Component {
         
         )
         .then(x => x.text())
-        .then(y => alert(y));
+        .then(y => alert("Törölve"));
       
         }
       
@@ -100,7 +100,7 @@ export default class FetchExample extends React.Component {
             bevitel1:szam
           }
       
-        fetch('http://'+ipcim+'/sorozatkommenttorles', {
+        fetch('http://'+ipcim+'/filmkommenttorles', {
             method: "POST",
             body: JSON.stringify(bemenet),
             headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -124,7 +124,7 @@ export default class FetchExample extends React.Component {
        <View style={{flexDirection:'column', alignItems:'center', justifyContent:'center', flexDirection:"row"}}>
         <TextInput
         placeholderTextColor="black"
-        style={{height: 45,backgroundColor:"#DCDCDC", borderRadius:10, padding:10, width:240,margin:20,marginRight:10, textAlign:"center", }}
+        style={{height: 45,backgroundColor:"#DCDCDC", borderRadius:10, padding:10, width:240,margin:20,marginRight:10, textAlign:"center",}}
         placeholder="Keresés"
         onChangeText={(szoveg) => this.setState({szoveg})}
         value={this.state.szoveg}
