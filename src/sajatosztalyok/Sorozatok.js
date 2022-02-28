@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View,Image,TouchableOpacity,TextInput,Dimensions,StyleSheet,Modal,Pressable,ScrollView } from 'react-native-web';
+import { FlatList, ActivityIndicator, Text, View,Image,TouchableOpacity,TextInput,StyleSheet,Modal,Pressable,ScrollView } from 'react-native-web';
 import Iframe from 'react-iframe';
 
 
@@ -23,7 +23,8 @@ export default class Sorozat extends React.Component {
       korabbi:[],
       komment:"",
       nev:"",
-      starCount:0
+      starCount:0,
+      dataSource3:[],
       
 
       
@@ -108,30 +109,7 @@ export default class Sorozat extends React.Component {
 
   
   componentDidMount(){
-    document.body.style.backgroundColor = "#262626"
-    let bemenet1 = {
-      bevitel3:this.state.sorozatid
-    }
-    fetch('http://'+ipcim+'/kommentek', {
-      method: "POST",
-      body: JSON.stringify(bemenet1),
-      headers: {"Content-type": "application/json; charset=UTF-8"}
-      } )
-      .then((response) => response.json())
-      .then((responseJson) => {
-  
-        this.setState({
-          isLoading: false,
-          dataSource3: responseJson,
-        }, function(){
-  
-        });
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
-    
-  
+    document.body.style.backgroundColor = "#262626";
 
      fetch('http://'+ipcim+'/sorozat')
       .then((response) => response.json())
@@ -174,7 +152,7 @@ export default class Sorozat extends React.Component {
  
   
 
-  felvitel = ()=>{
+  felvitel = ()=> {
     let bemenet={
       bevitel1:this.state.nev,
       bevitel2:this.state.komment,
@@ -187,9 +165,7 @@ export default class Sorozat extends React.Component {
       headers: {"Content-type": "application/json; charset=UTF-8"}
       } )
       .then((response) => response.text())
-      .then(() => {
-
-      })
+      .then(() => {})
       .catch((error) =>{
         console.error(error);
       });
@@ -225,7 +201,7 @@ export default class Sorozat extends React.Component {
 
   
 
-  kereses=async () =>{
+    kereses=async () =>{
     //alert(this.state.cim)
     let bemenet ={
       bevitel1:this.state.cim,
@@ -480,7 +456,7 @@ export default class Sorozat extends React.Component {
         />
 
         <TextInput
-          style={{borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderRadius:15,borderColor:"transparent",color:"black",width:300,height:50,marginLeft:30}}
+          style={{borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderRadius:15,borderColor:"transparent",width:300,height:50,marginLeft:30}}
           onChangeText={(komment) => this.setState({komment})}
           value={this.state.komment}
           multiline={true}
@@ -504,8 +480,7 @@ export default class Sorozat extends React.Component {
         </TouchableOpacity>
         }
 
-        
-        <FlatList
+        {this.state.dataSource3.length === 0 ? <Text style={{color:"white",fontSize:22,textAlign:"center"}}>Ehhez a sorozathoz még nincsenek kommentek</Text> :<FlatList
           data={this.state.dataSource3}
           keyExtractor={({komment_id}) => komment_id} 
           renderItem={({item}) =>
@@ -516,8 +491,7 @@ export default class Sorozat extends React.Component {
           </View>
         }
         />
-
-
+        }
                 </View>
               </View>
               </ScrollView>
