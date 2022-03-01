@@ -5,7 +5,7 @@ var width = Dimensions.get("window").width;
 
 const ipcim="localhost:8080";
 
-export default class FetchExample extends React.Component {
+export default class Keresestorles extends React.Component {
 
   constructor(props){
     super(props);
@@ -129,13 +129,21 @@ export default class FetchExample extends React.Component {
         onChangeText={(szoveg) => this.setState({szoveg})}
         value={this.state.szoveg}
         />
-        <TouchableOpacity 
-          onPress={ ()=>this.kereses()}>
+        {this.state.szoveg == "" ?  
+        <TouchableOpacity >
           <View style={{width:85,height:50,backgroundColor:"#2596be", borderRadius:10,height:45, alignItems:'center', justifyContent:'center'}}>
         
             <Text>Keresés</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> :
+        <TouchableOpacity 
+        onPress={ ()=>this.kereses()}>
+        <View style={{width:85,height:50,backgroundColor:"#2596be", borderRadius:10,height:45, alignItems:'center', justifyContent:'center'}}>
+      
+          <Text>Keresés</Text>
+        </View>
+      </TouchableOpacity>}
+        
       </View>
       
       <FlatList
@@ -165,13 +173,20 @@ export default class FetchExample extends React.Component {
         onChangeText={(szoveg2) => this.setState({szoveg2})}
         value={this.state.szoveg2}
         />
-        <TouchableOpacity 
-          onPress={ ()=>this.kereses2()}>
+        {this.state.szoveg2 == "" ?  
+        <TouchableOpacity >
           <View style={{width:85,height:50,backgroundColor:"#2596be", borderRadius:10,height:45, alignItems:'center', justifyContent:'center'}}>
         
             <Text>Keresés</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> :
+        <TouchableOpacity 
+        onPress={ ()=>this.kereses2()}>
+        <View style={{width:85,height:50,backgroundColor:"#2596be", borderRadius:10,height:45, alignItems:'center', justifyContent:'center'}}>
+      
+          <Text>Keresés</Text>
+        </View>
+      </TouchableOpacity>}
       </View>
       
       <FlatList
@@ -185,7 +200,7 @@ export default class FetchExample extends React.Component {
         style={styles.kekgomb}
         onPress={async ()=>this.filmkommenttorles(item.komment_id)}
       >
-        <Text style={{color:"white",fontWeight:"bold",fontSize:15}} >Komment törlés</Text>
+        <Text style={{color:"white",fontWeight:"bold",fontSize:15}} >Törlés</Text>
       </TouchableOpacity>
         </View>
          }

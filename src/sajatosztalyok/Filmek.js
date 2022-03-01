@@ -9,7 +9,7 @@ import Iframe from 'react-iframe';
 
 const ipcim="localhost:8080";
 
-export default class Sorozat extends React.Component {
+export default class Filmek extends React.Component {
 
   constructor(props){
     super(props);
@@ -157,7 +157,10 @@ export default class Sorozat extends React.Component {
       bevitel1:this.state.nev,
       bevitel2:this.state.komment,
       bevitel3:this.state.filmid
+    }
 
+    let bemenet1 = {
+      bevitel3:this.state.filmid
     }
     fetch('http://'+ipcim+'/filmkommentfelvitel', {
       method: "POST",
@@ -165,7 +168,28 @@ export default class Sorozat extends React.Component {
       headers: {"Content-type": "application/json; charset=UTF-8"}
       } )
       .then((response) => response.text())
-      .then(() => {})
+      .then(() => {
+
+        fetch('http://'+ipcim+'/filmkommentek', {
+          method: "POST",
+          body: JSON.stringify(bemenet1),
+          headers: {"Content-type": "application/json; charset=UTF-8"}
+          } )
+          .then((response) => response.json())
+          .then((responseJson) => {
+      
+            this.setState({
+              isLoading: false,
+              dataSource3: responseJson,
+            }, function(){
+      
+            });
+          })
+          .catch((error) =>{
+            console.error(error);
+          });
+        
+      })
       .catch((error) =>{
         console.error(error);
       });
@@ -173,28 +197,8 @@ export default class Sorozat extends React.Component {
       this.setState({komment:""})
       this.setState({nev:""})
 
-      let bemenet1 = {
-        bevitel3:this.state.filmid
-      }
-      fetch('http://'+ipcim+'/filmkommentek', {
-        method: "POST",
-        body: JSON.stringify(bemenet1),
-        headers: {"Content-type": "application/json; charset=UTF-8"}
-        } )
-        .then((response) => response.json())
-        .then((responseJson) => {
-    
-          this.setState({
-            isLoading: false,
-            dataSource3: responseJson,
-          }, function(){
-    
-          });
-        })
-        .catch((error) =>{
-          console.error(error);
-        });
-      
+ 
+     
 
      
     }
@@ -220,7 +224,7 @@ export default class Sorozat extends React.Component {
          isLoading: false,
          dataSource: responseJson,
        }, function(){
-        //alert(JSON.stringify(this.state.dataSource))
+        
 
        });
 
@@ -307,13 +311,20 @@ export default class Sorozat extends React.Component {
         value={this.state.cim}
         />
 
-        <TouchableOpacity 
-          onPress={async ()=>this.kereses()}>
+        {this.state.cim === "" ? 
+        <TouchableOpacity>
           <View style={{width:85,height:35,backgroundColor:"#2596be", borderRadius:10,padding:5,marginTop:20, marginRight:20}}>
         
             <Text style={{textAlign:"center",paddingTop:3}}>Keresés</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> : 
+        <TouchableOpacity 
+        onPress={async ()=>this.kereses()}>
+        <View style={{width:85,height:35,backgroundColor:"#2596be", borderRadius:10,padding:5,marginTop:20, marginRight:20}}>
+      
+          <Text style={{textAlign:"center",paddingTop:3}}>Keresés</Text>
+        </View>
+      </TouchableOpacity> }
         </View>
         
         <View style={{height:50, marginBottom:10,flexDirection:'row', }}>
@@ -394,7 +405,7 @@ export default class Sorozat extends React.Component {
                 renderItem={({item}) => 
 
                 <View>
-                  {item.sorozat_link === "" ? <Text>Nincs link</Text>:
+                  {item.film_link === "" ? <Text>Nincs link</Text>:
                   <Iframe
                   url ={item.film_link}
                   width="850px"
@@ -444,7 +455,7 @@ export default class Sorozat extends React.Component {
         />
 
         <TextInput
-          style={{borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderRadius:15,borderColor:"transparent",width:300,height:50,marginLeft:30}}
+          style={{borderWidth:1,padding:5,marginBottom:10,color:"black",backgroundColor:"lightgrey",borderRadius:15,borderColor:"transparent",width:300,height:50,marginLeft:30}}
           onChangeText={(komment) => this.setState({komment})}
           value={this.state.komment}
           multiline={true}
@@ -468,7 +479,7 @@ export default class Sorozat extends React.Component {
         </TouchableOpacity>
         }
 
-        {this.state.dataSource3.length === 0 ? <Text style={{color:"white",fontSize:22,textAlign:"center"}}>Ehhez a sorozathoz még nincsenek kommentek</Text> :<FlatList
+        {this.state.dataSource3.length === 0 ? <Text style={{color:"white",fontSize:22,textAlign:"center"}}>Ehhez a filmhez még nincsenek kommentek</Text> : <FlatList
           data={this.state.dataSource3}
           keyExtractor={({film_komment_id}) => film_komment_id} 
           renderItem={({item}) =>

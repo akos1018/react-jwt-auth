@@ -4,7 +4,7 @@ import {StyleSheet, FlatList, ActivityIndicator, Text, View, Image , TouchableOp
 
 const ipcim="localhost:8080";
 
-export default class FetchExample extends React.Component {
+export default class Adattorles extends React.Component {
 
   constructor(props){
     super(props);

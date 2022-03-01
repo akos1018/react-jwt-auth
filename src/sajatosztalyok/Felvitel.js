@@ -7,7 +7,7 @@ import FileUpload2 from "./upload2"
 const ipcim="localhost:8080";
 
 
-export default class Kezdooldal extends React.Component {
+export default class Felvitel extends React.Component {
 
   constructor(props){
     super(props);

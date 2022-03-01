@@ -10,14 +10,14 @@ import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
-import Proba from "./sajatosztalyok/Proba";
+import Kezdolap from "./sajatosztalyok/Kezdolap";
 import Sorozatok from "./sajatosztalyok/Sorozatok";
 import Adattorles from "./sajatosztalyok/Adattorles";
 import Keresestorles from "./sajatosztalyok/Keresestorles";
 import Felvitel from "./sajatosztalyok/Felvitel";
 import Filmek from "./sajatosztalyok/Filmek";
-
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import Nezettseg from "./sajatosztalyok/Nezettseg";
 
 
 
@@ -65,18 +65,16 @@ class App extends Component {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/proba">Kezdőoldal</Nav.Link>
+          <Nav.Link href="/kezdolap">Kezdőoldal</Nav.Link>
           <Nav.Link href="/sorozatok">Sorozatok</Nav.Link>
           <Nav.Link href="/filmek">Filmek</Nav.Link>
 
-          {currentUser && (
-            <Nav.Link href="/user">Felhasználó</Nav.Link>
-            )}
           {showAdminBoard && (
           <NavDropdown title="Admin" id="collasible-nav-dropdown">
             <NavDropdown.Item href="/adattorles">Adattörlés</NavDropdown.Item>
             <NavDropdown.Item href="/keresestorles">Keresés törlés</NavDropdown.Item>
             <NavDropdown.Item href="/Felvitel">Felvitel</NavDropdown.Item>
+            <NavDropdown.Item href="/Nezettseg">Nézettség</NavDropdown.Item>
 
           </NavDropdown>
             )}
@@ -130,20 +128,13 @@ class App extends Component {
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
-            <Route path="/Proba" component={Proba} />
+            <Route path="/Kezdolap" component={Kezdolap} />
             <Route path="/Sorozatok" component={Sorozatok} />
             <Route path="/Adattorles" component={Adattorles} />
             <Route path="/Keresestorles" component={Keresestorles} />
             <Route path="/Felvitel" component={Felvitel} />
             <Route path="/Filmek" component={Filmek} />
-
-        
-
-
-
-
-
-
+            <Route path="/Nezettseg" component={Nezettseg} />
           </Switch>
         </div>
       </div>

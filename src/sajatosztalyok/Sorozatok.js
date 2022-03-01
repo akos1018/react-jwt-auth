@@ -20,7 +20,6 @@ export default class Sorozat extends React.Component {
       sorozatid:0,
       dataSource4:[],
       sorozatcim:"",
-      korabbi:[],
       komment:"",
       nev:"",
       starCount:0,
@@ -157,7 +156,10 @@ export default class Sorozat extends React.Component {
       bevitel1:this.state.nev,
       bevitel2:this.state.komment,
       bevitel3:this.state.sorozatid
+    }
 
+    let bemenet1 = {
+      bevitel3:this.state.sorozatid
     }
     fetch('http://'+ipcim+'/kommentfelvitel', {
       method: "POST",
@@ -165,7 +167,29 @@ export default class Sorozat extends React.Component {
       headers: {"Content-type": "application/json; charset=UTF-8"}
       } )
       .then((response) => response.text())
-      .then(() => {})
+      .then(() => {
+        
+        fetch('http://'+ipcim+'/kommentek', {
+          method: "POST",
+          body: JSON.stringify(bemenet1),
+          headers: {"Content-type": "application/json; charset=UTF-8"}
+          } )
+          .then((response) => response.json())
+          .then((responseJson) => {
+      
+            this.setState({
+              isLoading: false,
+              dataSource3: responseJson,
+            }, function(){
+      
+            });
+          })
+          .catch((error) =>{
+            console.error(error);
+          });
+        
+  
+      })
       .catch((error) =>{
         console.error(error);
       });
@@ -173,29 +197,10 @@ export default class Sorozat extends React.Component {
       this.setState({komment:""})
       this.setState({nev:""})
 
-      let bemenet1 = {
-        bevitel3:this.state.sorozatid
-      }
-      fetch('http://'+ipcim+'/kommentek', {
-        method: "POST",
-        body: JSON.stringify(bemenet1),
-        headers: {"Content-type": "application/json; charset=UTF-8"}
-        } )
-        .then((response) => response.json())
-        .then((responseJson) => {
-    
-          this.setState({
-            isLoading: false,
-            dataSource3: responseJson,
-          }, function(){
-    
-          });
-        })
-        .catch((error) =>{
-          console.error(error);
-        });
-      
 
+
+     
+   
      
     }
 
@@ -282,6 +287,7 @@ export default class Sorozat extends React.Component {
   }
 
 
+
   
  
 
@@ -306,14 +312,21 @@ export default class Sorozat extends React.Component {
         onChangeText={(cim) => this.setState({cim})}
         value={this.state.cim}
         />
-
-        <TouchableOpacity 
-          onPress={async ()=>this.kereses()}>
+        {this.state.cim === "" ? 
+        <TouchableOpacity>
           <View style={{width:85,height:35,backgroundColor:"#2596be", borderRadius:10,padding:5,marginTop:20, marginRight:20}}>
         
             <Text style={{textAlign:"center",paddingTop:3}}>Keresés</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> : 
+        <TouchableOpacity 
+        onPress={async ()=>this.kereses()}>
+        <View style={{width:85,height:35,backgroundColor:"#2596be", borderRadius:10,padding:5,marginTop:20, marginRight:20}}>
+      
+          <Text style={{textAlign:"center",paddingTop:3}}>Keresés</Text>
+        </View>
+      </TouchableOpacity> }
+        
         </View>
         
         <View style={{height:50, marginBottom:10,flexDirection:'row', }}>
@@ -456,7 +469,7 @@ export default class Sorozat extends React.Component {
         />
 
         <TextInput
-          style={{borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderRadius:15,borderColor:"transparent",width:300,height:50,marginLeft:30}}
+          style={{borderWidth:1,padding:5,marginBottom:10,color:"black",backgroundColor:"lightgrey",borderRadius:15,borderColor:"transparent",width:300,height:50,marginLeft:30}}
           onChangeText={(komment) => this.setState({komment})}
           value={this.state.komment}
           multiline={true}
