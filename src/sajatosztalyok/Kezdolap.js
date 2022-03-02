@@ -384,6 +384,8 @@ export default class Kezdooldal extends React.Component {
               />
               <Text style={{color:"white",fontSize:16,fontWeight:"bold",textAlign:"center", width:135, }}>{item.sorozat_cim}</Text>
               </TouchableOpacity>
+
+    
           }
           />
           </View>

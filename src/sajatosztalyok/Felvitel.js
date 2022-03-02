@@ -26,6 +26,7 @@ export default class Felvitel extends React.Component {
       filmhossz:'',
       filmmufaj:'',
       filmleiras:'',
+      filmlink:''
 
 
     }
@@ -165,13 +166,21 @@ export default class Felvitel extends React.Component {
           multiline={true}
           placeholder='Film leírás'
         />
+        <TextInput
+          style={{borderRadius:15, borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderColor:"transparent",color:"black",width:200,height:35,marginLeft:30}}
+          onChangeText={(filmlink) => this.setState({filmlink})}
+          value={this.state.filmlink}
+          multiline={true}
+          placeholder='Film linkje'
+        />
 
           <FileUpload2 
           filmcim={this.state.filmcim} 
           filmev={this.state.filmev} 
           filmhossz={this.state.filmhossz}
           filmmufaj={this.state.filmmufaj}
-          filmleiras={this.state.filmleiras}>
+          filmleiras={this.state.filmleiras}
+          filmlink={this.state.filmlink}>
           </FileUpload2>
 
     </View>

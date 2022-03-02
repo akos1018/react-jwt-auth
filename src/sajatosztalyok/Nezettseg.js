@@ -9,7 +9,9 @@ export default class Nezettseg extends React.Component {
   constructor(props){
     super(props);
     this.state = { 
-        isLoading: true
+        isLoading: true,
+        dataSource:[],
+        dataSource2:[]
     }
   }
 
@@ -18,13 +20,40 @@ export default class Nezettseg extends React.Component {
 
 
   componentDidMount(){
-    fetch('http://'+ipcim+'/sorozatnezetsseg')
+    fetch('http://'+ipcim+'/sorozatnezettseg')
       .then((response) => response.json())
       .then((responseJson) => {
+        var elso = {
+            "sorozat_cim":"Sorozat címe",
+            "sorozat_kattintas":"Kattintások száma"
+        }
+        responseJson.unshift(elso)
 
         this.setState({
           isLoading: false,
           dataSource: responseJson,
+        }, function(){
+
+        });
+
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+
+      fetch('http://'+ipcim+'/filmnezettseg')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        var elso = {
+            "film_cim":"Film címe",
+            "film_kattintas":"Kattintások száma"
+        }
+
+        responseJson.unshift(elso)
+        this.setState({
+          isLoading: false,
+          dataSource2: responseJson,
         }, function(){
 
         });
@@ -50,24 +79,42 @@ export default class Nezettseg extends React.Component {
 
     return(
         <View style={{padding:20,backgroundColor:"#262626"}}>
-        <Text style={{textAlign:"center",fontSize:25,color:"white"}}>Sorozat és filmek nézettsége</Text>
-        <FlatList 
-        data={this.state.dataSource}
-        keyExtractor={({sorozat_id}) => sorozat_id}
-        renderItem={({item}) =>
-        <View style={{flexDirection:"row",borderColor:"red",flex:1}}>
-            <View style={{borderWidth:1,borderColor:"red",width:200,padding:10,}}>
-                <Text style={{fontSize:20,color:"white"}}>{item.sorozat_cim}</Text>
-            </View>
-            <View style={{borderWidth:1,borderColor:"",width:50,padding:10}}>
-                <Text style={{fontSize:20,color:"white"}}>{item.sorozat_kattintas}</Text>
+            <Text style={{textAlign:"center",fontSize:25,color:"white",margin:10,marginBottom:10}}>Sorozatok és filmek nézettsége</Text>
+            <View style={{flexDirection:"row"}}>
+                    <FlatList 
+                    data={this.state.dataSource}
+                    keyExtractor={({sorozat_id}) => sorozat_id}
+                    renderItem={({item}) =>
+                    <View style={{flexDirection:"row",borderColor:"#2596be",flex:1,alignSelf:"center"}}>
+                        <View style={{borderWidth:2,borderColor:"#2596be",width:200,padding:10,}}>
+                            <Text style={{fontSize:20,color:"white"}}>{item.sorozat_cim}</Text>
+                        </View>
+                        <View style={{borderWidth:2,borderColor:"#2596be",width:190,padding:10}}>
+                            <Text style={{fontSize:20,color:"white"}}>{item.sorozat_kattintas}</Text>
 
-            </View>
-        </View>
+                        </View>
+                    </View>
+                    }
+                    />
+        
 
+                    <FlatList 
+                    data={this.state.dataSource2}
+                    keyExtractor={({film_id}) => film_id}
+                    renderItem={({item}) =>
+                    <View style={{flexDirection:"row",borderColor:"#2596be",flex:1,alignSelf:"center"}}>
+                        <View style={{borderWidth:2,borderColor:"#2596be",width:300,padding:10,}}>
+                            <Text style={{fontSize:20,color:"white"}}>{item.film_cim}</Text>
+                        </View>
+                        <View style={{borderWidth:2,borderColor:"#2596be",width:190,padding:10}}>
+                            <Text style={{fontSize:20,color:"white"}}>{item.film_kattintas}</Text>
 
-      }
-      />
+                        </View>
+                    </View>
+                    }
+                    />
+                </View>
+
       </View>
     );
   }

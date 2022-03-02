@@ -29,7 +29,8 @@ function FileUpload2(props) {
                 bevitel11:props.filmhossz,
                 bevitel12:props.filmmufaj,
                 bevitel13:fileName,
-                bevitel14:props.filmleiras
+                bevitel14:props.filmleiras,
+                bevitel17:props.filmlink
                 
               }
               fetch('http://localhost:8080/filmfelvitel', {

@@ -18,6 +18,7 @@ import Felvitel from "./sajatosztalyok/Felvitel";
 import Filmek from "./sajatosztalyok/Filmek";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import Nezettseg from "./sajatosztalyok/Nezettseg";
+import Ajanlas from "./sajatosztalyok/Ajanlas"
 
 
 
@@ -68,6 +69,7 @@ class App extends Component {
           <Nav.Link href="/kezdolap">Kezdőoldal</Nav.Link>
           <Nav.Link href="/sorozatok">Sorozatok</Nav.Link>
           <Nav.Link href="/filmek">Filmek</Nav.Link>
+          <Nav.Link href="/ajanlas">Ajánlás</Nav.Link>
 
           {showAdminBoard && (
           <NavDropdown title="Admin" id="collasible-nav-dropdown">
@@ -135,6 +137,7 @@ class App extends Component {
             <Route path="/Felvitel" component={Felvitel} />
             <Route path="/Filmek" component={Filmek} />
             <Route path="/Nezettseg" component={Nezettseg} />
+            <Route path="/Ajanlas" component={Ajanlas} />
           </Switch>
         </div>
       </div>

@@ -85,7 +85,7 @@ export default class Adattorles extends React.Component {
           renderItem={({item}) => 
 
           <View >
-              <Text style={{color:"brown",fontSize:20,textAlign:"center",marginTop:15,marginBottom:5}}   >{item.sorozat_cim} </Text>
+              <Text style={{color:"white",fontSize:20,textAlign:"center",marginTop:15,marginBottom:5}}   >{item.sorozat_cim} </Text>
             <Image 
             source={{uri:'http://'+ipcim+'/kepek/'+item.sorozat_kep}}
             style={{width:200,height:280,marginRight:10,marginTop:10,marginLeft:"auto", marginRight:"auto",borderRadius:15,}}
@@ -112,10 +112,11 @@ const styles = StyleSheet.create({
   
   kekgomb: {
     alignItems: "center",
-    backgroundColor: "blue",
+    backgroundColor:"#2596be",
     padding: 10,
     width:300,
     marginLeft:"auto",
     marginRight:"auto",
+    marginTop:10
   }
 });
