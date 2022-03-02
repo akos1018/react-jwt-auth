@@ -102,6 +102,47 @@ export default class Sorozat extends React.Component {
           console.error(error);
         });
 
+        let bemenet2 ={
+          bevitel4:id
+        }
+        fetch('http://'+ipcim+'/sorozatlike', {
+          method: "POST",
+          body: JSON.stringify(bemenet2),
+          headers: {"Content-type": "application/json; charset=UTF-8"}
+          } )
+          .then((response) => response.json())
+          .then((responseJson) => {
+      
+            this.setState({
+              isLoading: false,
+              tetsziktomb: responseJson,
+            }, function(){
+      
+            });
+          })
+          .catch((error) =>{
+            console.error(error);
+          });
+
+          fetch('http://'+ipcim+'/sorozatdislike', {
+            method: "POST",
+            body: JSON.stringify(bemenet2),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+            } )
+            .then((response) => response.json())
+            .then((responseJson) => {
+        
+              this.setState({
+                isLoading: false,
+                nemtetsziktomb: responseJson,
+              }, function(){
+        
+              });
+            })
+            .catch((error) =>{
+              console.error(error);
+            });
+
 
   }
   
@@ -147,6 +188,90 @@ export default class Sorozat extends React.Component {
       });
       
   }
+
+  tetszik = ()=>{
+    let bemenet1 ={
+      bevitel4:this.state.sorozatid
+    }
+     let bemenet ={
+       bevitel4:this.state.sorozatid
+     }
+    fetch('http://'+ipcim+'/sorozatlikefelvitel', {
+      method: "POST",
+      body: JSON.stringify(bemenet),
+      headers: {"Content-type": "application/json; charset=UTF-8"}
+      } )
+      .then((response) => response.json())
+      .then(() => {
+        fetch('http://'+ipcim+'/sorozatlike', {
+          method: "POST",
+          body: JSON.stringify(bemenet1),
+          headers: {"Content-type": "application/json; charset=UTF-8"}
+          } )
+          .then((response) => response.json())
+          .then((responseJson) => {
+      
+            this.setState({
+              isLoading: false,
+              tetsziktomb: responseJson,
+            }, function(){
+      
+            });
+          })
+          .catch((error) =>{
+            console.error(error);
+          });
+        
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+
+      
+   }
+   nemtetszik = ()=>{
+     let bemenet1={
+       bevitel4:this.state.sorozatid
+     }
+    let bemenet ={
+      bevitel5:this.state.sorozatid
+    }
+   fetch('http://'+ipcim+'/sorozatdislikefelvitel', {
+     method: "POST",
+     body: JSON.stringify(bemenet),
+     headers: {"Content-type": "application/json; charset=UTF-8"}
+     } )
+     .then((response) => response.json())
+     .then(() => {
+
+      fetch('http://'+ipcim+'/sorozatdislike', {
+        method: "POST",
+        body: JSON.stringify(bemenet1),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+        } )
+        .then((response) => response.json())
+        .then((responseJson) => {
+    
+          this.setState({
+            isLoading: false,
+            nemtetsziktomb: responseJson,
+          }, function(){
+    
+          });
+        })
+        .catch((error) =>{
+          console.error(error);
+        });
+      
+    })
+
+     .catch((error) =>{
+       console.error(error);
+     });
+
+     
+  }
+
 
  
   
@@ -423,12 +548,49 @@ export default class Sorozat extends React.Component {
               />
               
               </View>
+
+              <View style={{flexDirection:"row",padding:10,justifyContent:"flex-end"}}>
+                 <View>
+                  <TouchableOpacity
+                  onPress={()=>this.tetszik()}
+                  style={{borderWidth:1,bordercolor:"grey",backgroundColor:"green", borderRadius:100, width:70}}
+                  >
+                    <Text style={{color:"white",padding:6, textAlign: "center"}}>Tetszik</Text>
+                  </TouchableOpacity>
+                   <FlatList
+                   data={this.state.tetsziktomb}
+                   keyExtractor={({sorozat_id}) => sorozat_id} 
+                   renderItem={({item}) =>
+                   <View style={{textAlign:'center'}}>
+                   <Text style={{fontSize:16,color:"white", }}>{item.sorozat_like}</Text>
+                  </View>
+                    }
+                   />
+                 </View>
+                 <View>
+                 <TouchableOpacity
+                 onPress={()=>this.nemtetszik()}
+                 style={{borderWidth:1,bordercolor:"grey",backgroundColor:"red",width:100, borderRadius:100,justifyContent:"center"}}
+                 >
+                 <Text style={{color:"white",textAlign: "center", padding:5, paddingBottom:8}}>Nem tetszik</Text>
+                  </TouchableOpacity>
+                  <FlatList
+                   data={this.state.nemtetsziktomb}
+                   keyExtractor={({sorozat_id}) => sorozat_id} 
+                   renderItem={({item}) =>
+                   <View style={{textAlign:'center'}}>
+                   <Text style={{fontSize:16,color:"white", }}>{item.sorozat_dislike}</Text>
+                  </View>
+                    }
+                   />
+                 </View>
+                 </View>
               
               <View style={styles.infok}>
                 <Text style={{color:"white",fontSize:25,textAlign:"center"}}>{this.state.sorozatcim}</Text>
                 <FlatList
                 data={this.state.dataSource5}
-                keyExtractor={({komment_id}) => komment_id} 
+                keyExtractor={({sorozat_id}) => sorozat_id} 
                 renderItem={({item}) =>
             <View style={{margin:10}} >
               <Text style={{fontSize:22,color:"#2596be",fontWeight:"bold"}}>Leírás:</Text>
