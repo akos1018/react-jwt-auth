@@ -673,7 +673,7 @@ export default class Kezdooldal extends React.Component {
           <Text style={{color:'white', fontSize:17, textAlign: 'left'}}> Filmek</Text>
           </Text>
           <FlatList 
-            style={{height:60}}
+            style={{height:60,textAlign:"center"}}
             showsHorizontalScrollIndicator={false}
             data={this.state.legnezettebbfilm}
             horizontal
@@ -699,7 +699,7 @@ export default class Kezdooldal extends React.Component {
           <Text style={{color:'white', fontSize:17, textAlign: 'left', paddingBottom:5}}> Filmek </Text>
           </Text>
           <FlatList 
-          style={{height:60}}
+          style={{height:60,textAlign:"center"}}
           showsHorizontalScrollIndicator={false}
           data={this.state.legfrissebbfilm}
           horizontal
@@ -710,7 +710,7 @@ export default class Kezdooldal extends React.Component {
             source={{uri:'http://'+ipcim+'/kepek/'+item.film_kep}}
             style={{width:200,height:280,margin:5,borderRadius:15}}
             />        
-            <Text style={{color:"white",fontSize:13,fontWeight:"bold",textAlign:"center", width:125, alignItems:'center' }}>{item.film_cim}</Text>
+            <Text style={{color:"white",fontSize:17,fontWeight:"bold",textAlign:"center", width:125, alignItems:'center' }}>{item.film_cim}</Text>
             </TouchableOpacity>
   
           }

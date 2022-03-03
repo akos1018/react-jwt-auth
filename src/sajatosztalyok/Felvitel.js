@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, ActivityIndicator,View, Text, TouchableOpacity, TextInput} from 'react-native-web';
 import FileUpload from "./upload"
 import FileUpload2 from "./upload2"
-
+import { Picker } from 'react-native-web';
 
 const ipcim="localhost:8080";
 
@@ -26,7 +26,10 @@ export default class Felvitel extends React.Component {
       filmhossz:'',
       filmmufaj:'',
       filmleiras:'',
-      filmlink:''
+      filmlink:'',
+      valaszt:0,
+      dataSource:[],
+      dataSource2:[]
 
 
     }
@@ -36,6 +39,45 @@ export default class Felvitel extends React.Component {
   componentDidMount(){
     document.body.style.backgroundColor = "#262626"
 
+    fetch('http://'+ipcim+'/mufaj')
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+      this.setState({
+        isLoading: false,
+        dataSource: responseJson,
+      }, function(){
+
+      });
+      
+
+    })
+
+    
+    .catch((error) =>{
+      console.error(error);
+    });
+
+    fetch('http://'+ipcim+'/filmmufaj')
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+      this.setState({
+        isLoading: false,
+        dataSource2: responseJson,
+      }, function(){
+
+      });
+      
+
+    })
+
+    
+    .catch((error) =>{
+      console.error(error);
+    });
+    
+    
     
 
   }
@@ -68,13 +110,18 @@ export default class Felvitel extends React.Component {
           multiline={true}
           placeholder='Sorozat hossz'
         />
-            <TextInput
-          style={{borderRadius:15, borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderColor:"transparent",color:"black",width:200,height:35,marginLeft:30}}
-          onChangeText={(sorozatmufaj) => this.setState({sorozatmufaj})}
-          value={this.state.sorozatmufaj}
-          multiline={true}
-          placeholder='Sorozat műfaj'
-        />
+
+        <Picker
+        selectedValue={this.state.valaszt}
+        style={{ height: 35, width: 200,marginBottom:10}}
+        onValueChange={(itemValue) => this.setState({valaszt:itemValue})}
+        >
+        {this.state.dataSource.map((item) => (
+          <Picker.Item key={item.mufaj_id} label={item.mufaj_nev} value={item.mufaj_id} />
+        ))}
+       
+       
+      </Picker>
 
       
 
@@ -111,7 +158,7 @@ export default class Felvitel extends React.Component {
           sorozatcim={this.state.sorozatcim} 
           sorozatev={this.state.sorozatev} 
           sorozathossz={this.state.sorozathossz}
-          sorozatmufaj={this.state.sorozatmufaj}
+          sorozatmufaj={this.state.valaszt}
           sorozatleiras={this.state.sorozatleiras}
           sorozatevadszam={this.state.sorozatevadszam}
           sorozatepizodszam={this.state.sorozatepizodszam}
