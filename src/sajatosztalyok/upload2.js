@@ -1,6 +1,10 @@
 import axios from 'axios';
 import React,{useState} from 'react'
 
+function hiba(){
+    alert("Hibás adatok!")
+}
+
 function FileUpload2(props) {
 
     const [file, setFile] = useState();
@@ -60,7 +64,7 @@ function FileUpload2(props) {
 
             <div className="App">
                 <input type="file" onChange={saveFile} />
-                <button onClick={uploadFile}>Feltöltés</button>
+                {props.filmcim=="" || props.filmev=="" || props.filmhossz=="" || props.filmleiras=="" || props.filmlink=="" || fileName=='' ? <button onClick={()=>hiba()}>Feltöltés</button>:<button onClick={uploadFile}>Feltöltés</button> }
             </div>
         );
 }

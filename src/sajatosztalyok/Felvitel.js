@@ -27,7 +27,8 @@ export default class Felvitel extends React.Component {
       filmmufaj:'',
       filmleiras:'',
       filmlink:'',
-      valaszt:0,
+      valaszt:1,
+      valaszt2:1,
       dataSource:[],
       dataSource2:[]
 
@@ -113,7 +114,7 @@ export default class Felvitel extends React.Component {
 
         <Picker
         selectedValue={this.state.valaszt}
-        style={{ height: 35, width: 200,marginBottom:10}}
+        style={{ height: 35, width: 200,marginBottom:10, marginLeft:30}}
         onValueChange={(itemValue) => this.setState({valaszt:itemValue})}
         >
         {this.state.dataSource.map((item) => (
@@ -196,13 +197,17 @@ export default class Felvitel extends React.Component {
           multiline={true}
           placeholder='Film hossz'
         />
-            <TextInput
-          style={{borderRadius:15, borderWidth:1,padding:5,marginBottom:10,color:"white",backgroundColor:"lightgrey",borderColor:"transparent",color:"black",width:200,height:35,marginLeft:30}}
-          onChangeText={(filmmufaj) => this.setState({filmmufaj})}
-          value={this.state.filmmufaj}
-          multiline={true}
-          placeholder='Film műfaj'
-        />
+             <Picker
+        selectedValue={this.state.valaszt2}
+        style={{ height: 35, width: 200,marginBottom:10, marginLeft:30}}
+        onValueChange={(itemValue) => this.setState({valaszt2:itemValue})}
+        >
+        {this.state.dataSource2.map((item) => (
+          <Picker.Item key={item.mufaj_id} label={item.mufaj_nev} value={item.mufaj_id} />
+        ))}
+       
+       
+      </Picker>
 
       
 
@@ -225,7 +230,7 @@ export default class Felvitel extends React.Component {
           filmcim={this.state.filmcim} 
           filmev={this.state.filmev} 
           filmhossz={this.state.filmhossz}
-          filmmufaj={this.state.filmmufaj}
+          filmmufaj={this.state.valaszt2}
           filmleiras={this.state.filmleiras}
           filmlink={this.state.filmlink}>
           </FileUpload2>
