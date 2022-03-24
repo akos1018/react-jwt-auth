@@ -81,6 +81,10 @@ export default class Keresestorles extends React.Component {
           var bemenet={
             bevitel1:szam
           }
+
+          let bemenet2 ={
+            bevitel1:this.state.szoveg,
+          }
       
         fetch('http://'+ipcim+'/sorozatkommenttorles', {
             method: "POST",
@@ -90,7 +94,30 @@ export default class Keresestorles extends React.Component {
         
         )
         .then(x => x.text())
-        .then(y => alert("Törölve"));
+        .then(() =>{
+          fetch('http://'+ipcim+'/osszessorozatkomment', {
+            method: "POST",
+            body: JSON.stringify(bemenet2),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+          }
+          )
+            .then((response) => response.json())
+            .then((responseJson) => {
+       
+              this.setState({
+                isLoading: false,
+                dataSource: responseJson,
+              }, function(){
+       
+              });
+       
+            })
+            .catch((error) =>{
+              console.error(error);
+            });
+        });
+
+        alert("Sikeres törlés")
       
         }
       
@@ -98,6 +125,10 @@ export default class Keresestorles extends React.Component {
           //alert(szam)
           var bemenet={
             bevitel1:szam
+          }
+
+          let bemenet2={
+            bevitel2:this.state.szoveg2
           }
       
         fetch('http://'+ipcim+'/filmkommenttorles', {
@@ -108,7 +139,30 @@ export default class Keresestorles extends React.Component {
         
         )
         .then(x => x.text())
-        .then(y => alert(y));
+        .then(() =>{
+          fetch('http://'+ipcim+'/osszesfilmkomment', {
+            method: "POST",
+            body: JSON.stringify(bemenet2),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+          }
+          )
+            .then((response) => response.json())
+            .then((responseJson) => {
+       
+              this.setState({
+                isLoading: false,
+                dataSource2: responseJson,
+              }, function(){
+       
+              });
+       
+            })
+            .catch((error) =>{
+              console.error(error);
+            });
+        });
+
+        alert("Sikeres törlés")
       
         }
 
@@ -198,7 +252,7 @@ export default class Keresestorles extends React.Component {
             <Text style={{fontSize:17}}>{item.film_komment_szoveg}</Text>
             <TouchableOpacity
         style={styles.kekgomb}
-        onPress={async ()=>this.filmkommenttorles(item.komment_id)}
+        onPress={async ()=>this.filmkommenttorles(item.film_komment_id)}
       >
         <Text style={{color:"white",fontWeight:"bold",fontSize:15}} >Törlés</Text>
       </TouchableOpacity>
